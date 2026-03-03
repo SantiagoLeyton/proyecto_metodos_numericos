@@ -10,7 +10,7 @@ Function = Callable[[float], float]
 
 @dataclass(frozen=True)
 class ExerciseDefinition:
-    """Define una función (y opcionalmente derivadas) para un ejercicio."""
+    """Definición de una función (y opcionalmente derivadas) para un ejercicio."""
     key: str
     display_name: str
     f: Function
@@ -21,41 +21,39 @@ class ExerciseDefinition:
 
 
 # =========================
-# EJERCICIO 1 (Bisección)
+# EJERCICIO 1
 # T(λ) = 2.5 + 0.8λ² - 3.2λ + ln(λ + 1)
 # =========================
 def exercise1_f(x: float) -> float:
-    """Función T(λ). Dominio: x > -1 por el ln(x+1)."""
+    """Función T(λ). Dominio: x > -1 por ln(x+1)."""
     if x <= -1.0:
         raise ValueError("Dominio inválido: se requiere x > -1 por ln(x+1).")
     return 2.5 + 0.8 * (x ** 2) - 3.2 * x + math.log(x + 1.0)
 
 
 # =========================
-# EJERCICIO 2 (Falsa posición / Bisección)
+# EJERCICIO 2
 # E(x) = x³ - 6x² + 11x - 6.5
 # =========================
 def exercise2_f(x: float) -> float:
-    """Función E(x)."""
     return (x ** 3) - 6.0 * (x ** 2) + 11.0 * x - 6.5
 
 
 # =========================
 # EJERCICIO 3 (Punto fijo)
-# x = 0.5 cos(x) + 1.5  => g(x) = 0.5cos(x) + 1.5
+# x = 0.5cos(x) + 1.5  => g(x) = 0.5cos(x) + 1.5
 # =========================
 def exercise3_g(x: float) -> float:
-    """Función de iteración g(x) para punto fijo."""
     return 0.5 * math.cos(x) + 1.5
 
 
 def exercise3_g_prime(x: float) -> float:
-    """Derivada analítica de g(x): g'(x) = -0.5 sin(x)."""
+    """g'(x) = -0.5 sin(x)"""
     return -0.5 * math.sin(x)
 
 
 def exercise3_fixed_point_residual(x: float) -> float:
-    """f(x) equivalente para ver raíz: f(x)=x-g(x). (Útil para graficar)."""
+    """Para graficar como raíz: f(x)=x-g(x)."""
     return x - exercise3_g(x)
 
 
@@ -64,12 +62,11 @@ def exercise3_fixed_point_residual(x: float) -> float:
 # T(n) = n³ - 8n² + 20n - 16
 # =========================
 def exercise4_f(x: float) -> float:
-    """Función T(n)."""
     return (x ** 3) - 8.0 * (x ** 2) + 20.0 * x - 16.0
 
 
 def exercise4_f_prime(x: float) -> float:
-    """Derivada analítica: T'(n) = 3n² - 16n + 20."""
+    """T'(n) = 3n² - 16n + 20"""
     return 3.0 * (x ** 2) - 16.0 * x + 20.0
 
 
@@ -79,17 +76,14 @@ def exercise4_f_prime(x: float) -> float:
 # f'(x)= e^(-x/2)(1 - x/2)
 # =========================
 def exercise5_f(x: float) -> float:
-    """Función P(x)."""
     return x * math.exp(-x / 2.0) - 0.3
 
 
 def exercise5_f_prime(x: float) -> float:
-    """Derivada analítica dada: e^(-x/2)(1 - x/2)."""
     return math.exp(-x / 2.0) * (1.0 - x / 2.0)
 
 
 def get_exercises() -> Dict[str, ExerciseDefinition]:
-    """Devuelve el catálogo de ejercicios para poblar el dropdown de la GUI."""
     exercises: Dict[str, ExerciseDefinition] = {
         "EX1": ExerciseDefinition(
             key="EX1",
@@ -99,14 +93,14 @@ def get_exercises() -> Dict[str, ExerciseDefinition]:
         ),
         "EX2": ExerciseDefinition(
             key="EX2",
-            display_name="Ejercicio 2 - Falsa Posición vs Bisección (Balanceo)",
+            display_name="Ejercicio 2 - Comparación (Balanceo)",
             f=exercise2_f,
             domain_hint=(2.0, 4.0),
         ),
         "EX3": ExerciseDefinition(
             key="EX3",
             display_name="Ejercicio 3 - Punto Fijo (Crecimiento BD)",
-            f=exercise3_fixed_point_residual,  # para graficar f(x)=x-g(x)
+            f=exercise3_fixed_point_residual,
             g=exercise3_g,
             g_prime=exercise3_g_prime,
             domain_hint=(0.0, 3.0),
